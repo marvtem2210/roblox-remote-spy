@@ -418,11 +418,11 @@ local function CreateGUI()
     screenGui.ResetOnSpawn = false
     screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
     
-    -- Main window frame (BIGGER SIZE: 900x700)
+    -- Main window frame (MOBILE SIZE: scale-based, ~95% width x 65% height)
     local mainFrame = Instance.new("Frame")
     mainFrame.Name = "MainFrame"
-    mainFrame.Size = UDim2.new(0, 900, 0, 700)
-    mainFrame.Position = UDim2.new(0.5, -450, 0.5, -350)
+    mainFrame.Size = UDim2.new(0.95, 0, 0.65, 0)
+    mainFrame.Position = UDim2.new(0.025, 0, 0.05, 0)
     mainFrame.BackgroundColor3 = COLORS.BACKGROUND
     mainFrame.BorderSizePixel = 0
     mainFrame.Active = true
@@ -433,10 +433,10 @@ local function CreateGUI()
     mainCorner.CornerRadius = UDim.new(0, 8)
     mainCorner.Parent = mainFrame
     
-    -- Title bar (BIGGER HEIGHT: 45px)
+    -- Title bar (MOBILE: 32px)
     local titleBar = Instance.new("Frame")
     titleBar.Name = "TitleBar"
-    titleBar.Size = UDim2.new(1, 0, 0, 45)
+    titleBar.Size = UDim2.new(1, 0, 0, 32)
     titleBar.BackgroundColor3 = COLORS.PANEL
     titleBar.BorderSizePixel = 0
     titleBar.Parent = mainFrame
@@ -445,28 +445,28 @@ local function CreateGUI()
     titleCorner.CornerRadius = UDim.new(0, 8)
     titleCorner.Parent = titleBar
     
-    -- Title text (BIGGER FONT: 20)
+    -- Title text (MOBILE: 14px)
     local titleLabel = Instance.new("TextLabel")
     titleLabel.Name = "TitleLabel"
-    titleLabel.Size = UDim2.new(1, -120, 1, 0)
-    titleLabel.Position = UDim2.new(0, 15, 0, 0)
+    titleLabel.Size = UDim2.new(1, -80, 1, 0)
+    titleLabel.Position = UDim2.new(0, 10, 0, 0)
     titleLabel.BackgroundTransparency = 1
     titleLabel.Text = "🔍 Remote Spy v1.0"
     titleLabel.TextColor3 = COLORS.TEXT_PRIMARY
-    titleLabel.TextSize = 20
+    titleLabel.TextSize = 14
     titleLabel.Font = Enum.Font.GothamBold
     titleLabel.TextXAlignment = Enum.TextXAlignment.Left
     titleLabel.Parent = titleBar
     
-    -- Close button (BIGGER: 38x38)
+    -- Close button (MOBILE: 26x26)
     local closeButton = Instance.new("TextButton")
     closeButton.Name = "CloseButton"
-    closeButton.Size = UDim2.new(0, 38, 0, 38)
-    closeButton.Position = UDim2.new(1, -42, 0, 3.5)
+    closeButton.Size = UDim2.new(0, 26, 0, 26)
+    closeButton.Position = UDim2.new(1, -30, 0, 3)
     closeButton.BackgroundColor3 = COLORS.ERROR
     closeButton.Text = "×"
     closeButton.TextColor3 = COLORS.TEXT_PRIMARY
-    closeButton.TextSize = 24
+    closeButton.TextSize = 18
     closeButton.Font = Enum.Font.GothamBold
     closeButton.Parent = titleBar
     
@@ -478,15 +478,15 @@ local function CreateGUI()
         screenGui:Destroy()
     end)
     
-    -- Minimize button (BIGGER: 38x38)
+    -- Minimize button (MOBILE: 26x26)
     local minimizeButton = Instance.new("TextButton")
     minimizeButton.Name = "MinimizeButton"
-    minimizeButton.Size = UDim2.new(0, 38, 0, 38)
-    minimizeButton.Position = UDim2.new(1, -85, 0, 3.5)
+    minimizeButton.Size = UDim2.new(0, 26, 0, 26)
+    minimizeButton.Position = UDim2.new(1, -60, 0, 3)
     minimizeButton.BackgroundColor3 = COLORS.WARNING
     minimizeButton.Text = "–"
     minimizeButton.TextColor3 = COLORS.TEXT_PRIMARY
-    minimizeButton.TextSize = 24
+    minimizeButton.TextSize = 18
     minimizeButton.Font = Enum.Font.GothamBold
     minimizeButton.Parent = titleBar
     
@@ -500,13 +500,13 @@ local function CreateGUI()
     minimizeButton.MouseButton1Click:Connect(function()
         isMinimized = not isMinimized
         if isMinimized then
-            mainFrame:TweenSize(UDim2.new(0, 900, 0, 45), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, 0.2, true)
+            mainFrame:TweenSize(UDim2.new(0.95, 0, 0, 32), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, 0.2, true)
             -- Bug #9 fix: hide content elements when minimized
             for _, element in ipairs(contentElements) do
                 element.Visible = false
             end
         else
-            mainFrame:TweenSize(UDim2.new(0, 900, 0, 700), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, 0.2, true)
+            mainFrame:TweenSize(UDim2.new(0.95, 0, 0.65, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, 0.2, true)
             -- Bug #9 fix: show content elements when restored
             for _, element in ipairs(contentElements) do
                 element.Visible = true
@@ -514,11 +514,11 @@ local function CreateGUI()
         end
     end)
     
-    -- Statistics panel (BIGGER: 80px height)
+    -- Statistics panel (MOBILE: scale width, 50px)
     local statsPanel = Instance.new("Frame")
     statsPanel.Name = "StatsPanel"
-    statsPanel.Size = UDim2.new(1, -30, 0, 80)
-    statsPanel.Position = UDim2.new(0, 15, 0, 60)
+    statsPanel.Size = UDim2.new(1, -16, 0, 50)
+    statsPanel.Position = UDim2.new(0, 8, 0, 42)
     statsPanel.BackgroundColor3 = COLORS.PANEL
     statsPanel.BorderSizePixel = 0
     statsPanel.Parent = mainFrame
@@ -527,38 +527,38 @@ local function CreateGUI()
     statsCorner.CornerRadius = UDim.new(0, 6)
     statsCorner.Parent = statsPanel
     
-    -- Stats label (BIGGER FONT: 16)
+    -- Stats label (MOBILE: 12px)
     local statsLabel = Instance.new("TextLabel")
     statsLabel.Name = "StatsLabel"
-    statsLabel.Size = UDim2.new(1, -30, 1, -15)
-    statsLabel.Position = UDim2.new(0, 15, 0, 8)
+    statsLabel.Size = UDim2.new(1, -16, 1, -8)
+    statsLabel.Position = UDim2.new(0, 8, 0, 4)
     statsLabel.BackgroundTransparency = 1
     statsLabel.Text = "📊 Loading..."
     statsLabel.TextColor3 = COLORS.TEXT_SECONDARY
-    statsLabel.TextSize = 16
+    statsLabel.TextSize = 12
     statsLabel.Font = Enum.Font.Gotham
     statsLabel.TextXAlignment = Enum.TextXAlignment.Left
     statsLabel.TextYAlignment = Enum.TextYAlignment.Top
     statsLabel.TextWrapped = true
     statsLabel.Parent = statsPanel
     
-    -- Control buttons panel (BETTER POSITIONING)
+    -- Control buttons panel (MOBILE: 2 rows of 2 buttons)
     local controlPanel = Instance.new("Frame")
     controlPanel.Name = "ControlPanel"
-    controlPanel.Size = UDim2.new(1, -30, 0, 50)
-    controlPanel.Position = UDim2.new(0, 15, 0, 155)
+    controlPanel.Size = UDim2.new(1, -16, 0, 82)
+    controlPanel.Position = UDim2.new(0, 8, 0, 100)
     controlPanel.BackgroundTransparency = 1
     controlPanel.Parent = mainFrame
     
-    -- Pause/Resume button (BIGGER: 140x45)
+    -- Pause/Resume button (MOBILE: 2 per row)
     local pauseButton = Instance.new("TextButton")
     pauseButton.Name = "PauseButton"
-    pauseButton.Size = UDim2.new(0, 140, 0, 45)
+    pauseButton.Size = UDim2.new(0.5, -6, 0, 36)
     pauseButton.Position = UDim2.new(0, 0, 0, 0)
     pauseButton.BackgroundColor3 = COLORS.SUCCESS
     pauseButton.Text = "▶️ Pause"
     pauseButton.TextColor3 = COLORS.TEXT_PRIMARY
-    pauseButton.TextSize = 16
+    pauseButton.TextSize = 13
     pauseButton.Font = Enum.Font.GothamBold
     pauseButton.Parent = controlPanel
     
@@ -577,15 +577,15 @@ local function CreateGUI()
         end
     end)
     
-    -- Clear button (BIGGER: 140x45)
+    -- Clear button (MOBILE: row 1, col 2)
     local clearButton = Instance.new("TextButton")
     clearButton.Name = "ClearButton"
-    clearButton.Size = UDim2.new(0, 140, 0, 45)
-    clearButton.Position = UDim2.new(0, 150, 0, 0)
+    clearButton.Size = UDim2.new(0.5, -6, 0, 36)
+    clearButton.Position = UDim2.new(0.5, 6, 0, 0)
     clearButton.BackgroundColor3 = COLORS.ERROR
     clearButton.Text = "🗑️ Clear"
     clearButton.TextColor3 = COLORS.TEXT_PRIMARY
-    clearButton.TextSize = 16
+    clearButton.TextSize = 13
     clearButton.Font = Enum.Font.GothamBold
     clearButton.Parent = controlPanel
     
@@ -599,15 +599,15 @@ local function CreateGUI()
         UpdateStatistics()
     end)
     
-    -- Export button (BIGGER: 140x45)
+    -- Export button (MOBILE: row 2, col 1)
     local exportButton = Instance.new("TextButton")
     exportButton.Name = "ExportButton"
-    exportButton.Size = UDim2.new(0, 140, 0, 45)
-    exportButton.Position = UDim2.new(0, 300, 0, 0)
+    exportButton.Size = UDim2.new(0.5, -6, 0, 36)
+    exportButton.Position = UDim2.new(0, 0, 0, 42)
     exportButton.BackgroundColor3 = COLORS.ACCENT
     exportButton.Text = "💾 Export"
     exportButton.TextColor3 = COLORS.TEXT_PRIMARY
-    exportButton.TextSize = 16
+    exportButton.TextSize = 13
     exportButton.Font = Enum.Font.GothamBold
     exportButton.Parent = controlPanel
     
@@ -619,15 +619,15 @@ local function CreateGUI()
         SaveLogsToFile()
     end)
     
-    -- Block toggle button (BIGGER: 160x45)
+    -- Block toggle button (MOBILE: row 2, col 2)
     local blockButton = Instance.new("TextButton")
     blockButton.Name = "BlockButton"
-    blockButton.Size = UDim2.new(0, 160, 0, 45)
-    blockButton.Position = UDim2.new(0, 450, 0, 0)
+    blockButton.Size = UDim2.new(0.5, -6, 0, 36)
+    blockButton.Position = UDim2.new(0.5, 6, 0, 42)
     blockButton.BackgroundColor3 = CONFIG.ENABLE_CALL_BLOCKER and COLORS.SUCCESS or COLORS.PANEL
     blockButton.Text = "🚫 Block: " .. (CONFIG.ENABLE_CALL_BLOCKER and "ON" or "OFF")
     blockButton.TextColor3 = COLORS.TEXT_PRIMARY
-    blockButton.TextSize = 16
+    blockButton.TextSize = 13
     blockButton.Font = Enum.Font.GothamBold
     blockButton.Parent = controlPanel
     
@@ -641,14 +641,14 @@ local function CreateGUI()
         blockButton.BackgroundColor3 = CONFIG.ENABLE_CALL_BLOCKER and COLORS.SUCCESS or COLORS.PANEL
     end)
     
-    -- Log display scrolling frame (BIGGER AREA)
+    -- Log display scrolling frame (MOBILE: fills remaining space)
     local logFrame = Instance.new("ScrollingFrame")
     logFrame.Name = "LogFrame"
-    logFrame.Size = UDim2.new(1, -30, 1, -230)
-    logFrame.Position = UDim2.new(0, 15, 0, 220)
+    logFrame.Size = UDim2.new(1, -16, 1, -200)
+    logFrame.Position = UDim2.new(0, 8, 0, 192)
     logFrame.BackgroundColor3 = COLORS.PANEL
     logFrame.BorderSizePixel = 0
-    logFrame.ScrollBarThickness = 10
+    logFrame.ScrollBarThickness = 8
     logFrame.CanvasSize = UDim2.new(0, 0, 0, 0)
     logFrame.Parent = mainFrame
     
@@ -656,11 +656,11 @@ local function CreateGUI()
     logCorner.CornerRadius = UDim.new(0, 6)
     logCorner.Parent = logFrame
     
-    -- UIListLayout for logs (BIGGER SPACING)
+    -- LogLayout padding (MOBILE: 4px)
     local logLayout = Instance.new("UIListLayout")
     logLayout.Name = "LogLayout"
     logLayout.SortOrder = Enum.SortOrder.LayoutOrder
-    logLayout.Padding = UDim.new(0, 8)
+    logLayout.Padding = UDim.new(0, 4)
     logLayout.Parent = logFrame
     
     logLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
@@ -754,11 +754,11 @@ local function UpdateLogDisplay()
     end
 end
 
--- Create individual log entry (BIGGER & MORE READABLE)
+-- Create individual log entry (MOBILE: compact)
 local function CreateLogEntry(parent, log, index)
     local entryFrame = Instance.new("Frame")
     entryFrame.Name = "LogEntry_" .. index
-    entryFrame.Size = UDim2.new(1, -15, 0, 110)
+    entryFrame.Size = UDim2.new(1, -8, 0, 85)
     entryFrame.BackgroundColor3 = COLORS.BACKGROUND
     entryFrame.BorderSizePixel = 0
     entryFrame.LayoutOrder = index
@@ -768,11 +768,11 @@ local function CreateLogEntry(parent, log, index)
     entryCorner.CornerRadius = UDim.new(0, 4)
     entryCorner.Parent = entryFrame
     
-    -- Type indicator (color coded, BIGGER: 6px width)
+    -- Type indicator (color coded, MOBILE: 4px width)
     local typeColor = log.remoteType == "RemoteEvent" and COLORS.ACCENT or COLORS.SUCCESS
     local typeIndicator = Instance.new("Frame")
     typeIndicator.Name = "TypeIndicator"
-    typeIndicator.Size = UDim2.new(0, 6, 1, 0)
+    typeIndicator.Size = UDim2.new(0, 4, 1, 0)
     typeIndicator.BackgroundColor3 = typeColor
     typeIndicator.BorderSizePixel = 0
     typeIndicator.Parent = entryFrame
@@ -792,12 +792,12 @@ local function CreateLogEntry(parent, log, index)
     
     local logLabel = Instance.new("TextLabel")
     logLabel.Name = "LogLabel"
-    logLabel.Size = UDim2.new(1, -20, 1, -12)
-    logLabel.Position = UDim2.new(0, 14, 0, 6)
+    logLabel.Size = UDim2.new(1, -14, 1, -8)
+    logLabel.Position = UDim2.new(0, 10, 0, 4)
     logLabel.BackgroundTransparency = 1
     logLabel.Text = logText
     logLabel.TextColor3 = COLORS.TEXT_SECONDARY
-    logLabel.TextSize = 14
+    logLabel.TextSize = 11
     logLabel.Font = Enum.Font.Code
     logLabel.TextXAlignment = Enum.TextXAlignment.Left
     logLabel.TextYAlignment = Enum.TextYAlignment.Top
